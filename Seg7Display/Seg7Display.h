@@ -412,6 +412,8 @@ class Seg7Display
 		 * \sa scrollUpper and scrollLower for how to set up scrolling text.
 	    */
 		void 				helperSetupScroll(String& str, scroll_t& scroll, char *disp, unsigned int t, uint8_t left);
+		
+		void 				sendSPImessage(unsigned char ch, unsigned char pos);
 };
 
 #endif // Seg7Display_h

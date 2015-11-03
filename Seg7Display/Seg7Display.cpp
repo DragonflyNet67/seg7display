@@ -152,24 +152,23 @@ void Seg7Display::refresh()
 		  /** spi_packet:  bits 8-15 = 7SEG code for character to print on the display
 		   *               bits 0-7  = code for which 7SEG to update. 0x80 = upper left, 0x01 = lower right.
 		   */
-		  word spi_packet = (unsigned word)asciiTo7seg(m_disp.upLo[i])<<8 | 0x80>>i;
-		  
-		  // Add any active decimal points to the display.
-		  spi_packet |= (m_dps & dp)? 0x0100:0x0000;
-		  
-		  // Transfer two bytes over SPI.
-		  digitalWrite(m_slaveSelectPin, LOW);
-		  SPI.transfer16(spi_packet);
-		  digitalWrite(m_slaveSelectPin, HIGH);
+		   
+		   sendSPImessage( asciiTo7seg(m_disp.upLo[i]) | ((m_dps & dp)?0x01:0x00), 0x80>>i);
 	  } else {
 		  // Transfer a zero to digit i.
-		  digitalWrite(m_slaveSelectPin, LOW);
-		  SPI.transfer16(0x0000 + (0x80>>i));
-		  digitalWrite(m_slaveSelectPin, HIGH);
+		   sendSPImessage( 0x00, 0x80>>i);
 	  }
 	  
 	  dp = dp>>1;			// Check if next decimal point is on or not.
 	}
+}
+
+void Seg7Display::sendSPImessage(unsigned char ch, unsigned char pos)
+{
+	// Transfer two bytes over SPI.
+	digitalWrite(m_slaveSelectPin, LOW);
+	SPI.transfer16(ch<<8 | pos);
+	digitalWrite(m_slaveSelectPin, HIGH);
 }
 
 // Call this function to set up scrolling text for the upper display.
