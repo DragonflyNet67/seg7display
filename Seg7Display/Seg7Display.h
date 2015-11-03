@@ -402,7 +402,7 @@ class Seg7Display
 	    */
 		void 				helperScroll(scroll_t& scroll, char *disp);
 
-		//! Function to check if there is scrolling text to display.
+		//! Function to set up scrolling text for the upper or lower display.
 		/*!
 		  \param [in] str is the string to scroll.
 		  \param [in] scroll is the scroll object.
@@ -411,7 +411,7 @@ class Seg7Display
 		  \param [in] left is true (not 0) for left scroll. Otherwise we scroll to the right.
 		 * \sa scrollUpper and scrollLower for how to set up scrolling text.
 	    */
-		void 				scrollHelper(String& str, scroll_t& scroll, char *disp, unsigned int t, uint8_t left);
+		void 				helperSetupScroll(String& str, scroll_t& scroll, char *disp, unsigned int t, uint8_t left);
 };
 
 #endif // Seg7Display_h
