@@ -175,7 +175,7 @@ void Seg7Display::refresh()
 // Call this function to set up scrolling text for the upper display.
 void Seg7Display::scrollUpperEx(String str, unsigned int t, uint8_t left)
 {
-	scrollHelper(str, m_scrollUpper, m_disp.upper, t, left);
+	helperSetupScroll(str, m_scrollUpper, m_disp.upper, t, left);
 }
 
 // Call this function to set up scrolling text for the upper display.
@@ -189,7 +189,7 @@ void Seg7Display::scrollUpper(unsigned int t, uint8_t left)
 // Call this function to set up scrolling text for the lower display.
 void Seg7Display::scrollLowerEx(String str, unsigned int t, uint8_t left)
 {
-	scrollHelper(str, m_scrollLower, m_disp.lower, t, left);
+	helperSetupScroll(str, m_scrollLower, m_disp.lower, t, left);
 }
 
 // Call this function to set up scrolling text for the lower display.
@@ -265,8 +265,8 @@ uint8_t Seg7Display::asciiTo7seg(char ch)
 	return 0;  // The character was outside the ASCII table used.
 }
 
-// Call this function to set up scrolling text for the upper display.
-void Seg7Display::scrollHelper(String& str, scroll_t& scroll, char *disp, unsigned int t, uint8_t left)
+// Call this function to set up scrolling text for the upper or lower display.
+void Seg7Display::helperSetupScroll(String& str, scroll_t& scroll, char *disp, unsigned int t, uint8_t left)
 {
 	for(uint8_t x=0; x<4; x++) {
 		*(disp+x) = ' ';
